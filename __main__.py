@@ -22,6 +22,14 @@ def wallet(page="Wallet"):
     return template("main", text=page.capitalize(), count=count)
 
 
+@app.route('/top')
+def top(page="Top"):
+    params = request.params.getunicode('count', 10)
+    count = int(params) if str(params).isdigit() else 10
+    top_list = get_top_users(count)
+    return template("main", text=page.capitalize(), top=top_list, count=count)
+
+
 @app.route('/')
 def hello(page='Home'):
 

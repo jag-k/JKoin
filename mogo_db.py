@@ -77,10 +77,24 @@ def get_count_coins(user_id):
     return {"count": coins.find({"user": user.get('id', -1)}).count(), "user": user}
 
 
+def get_top_users(count=10):
+        top = coins.aggregate([
+            {
+                "$group": {
+                    "_id": "$user",
+                    "count": {
+                        "$sum": 1
+                    },
+                }
+            },
+            {
+                "$sort": {
+                    "count": -1
+                }
+            }
+        ])
+        return list(map(lambda x: {"user": get_user(x['_id']), "count": x['count']}, top))[:count]
+
+
 if __name__ == '__main__':
-    print(create_coin("id1-OdKmnRPbNr"))
-    for i in coins.find():
-        pprint(i)
-    print(get_count_coins("id1"))
-    print(get_count_coins("jag_k58"))
-    print(get_count_coins("2131g13g44tc3"))
+    pprint(get_top_users())
