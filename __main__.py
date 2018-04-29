@@ -14,11 +14,20 @@ def st(filename):
 #     print(args, kwargs)
 #     return template("main", text="404")
 
+@app.route('/transfer')
+def transfer(page="Transfer"):
+    params = request.params  # type: bottle.FormsDict
+    from_user = params.getunicode("from", "").strip()
+    to_user = params.getunicode("to", "").strip()
+    count = params.getunicode("count", "").strip()
+    count = count if str(count).isdigit() else 1
+    return template("main", text=page.capitalize(), res=transfer_coins(from_user, to_user, int(count)))
+
+
 @app.route('/wallet')
 def wallet(page="Wallet"):
     params = request.params  # type: bottle.FormsDict
     count = get_count_coins(params.getunicode("id", "").strip())
-    print(count)
     return template("main", text=page.capitalize(), count=count)
 
 

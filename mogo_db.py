@@ -1,4 +1,5 @@
 from pprint import pprint
+from bson.dbref import DBRef
 from datetime import datetime
 from hashlib import md5 as __md__
 import pymongo, requests, sys, time
@@ -96,5 +97,32 @@ def get_top_users(count=10):
         return list(map(lambda x: {"user": get_user(x['_id']), "count": x['count']}, top))[:count]
 
 
+def transfer_coins(from_user, to_user, count=1):
+    fr, to = get_user(from_user), get_user(to_user)
+    if fr and to:
+        transfer_count = 0
+        coins_count = get_count_coins(fr['id'])['count']
+        while coins_count and count:
+            count -= 1
+            coins_count -= 1
+            transfer_count += 1
+            id = coins.find_one({'user': fr['id']})["_id"]
+            coins.replace_one({'_id': id}, {'user': to['id']})
+
+            log.insert_one(
+                {
+                    "coin": DBRef("coins", id),
+                    "user": fr['id'],
+                    "to": to['id'],
+                    "datetime": datetime.utcnow(),
+                    "time": time.time()
+                }
+            )
+        return {"transfer": transfer_count,
+                "from": {"user": fr, "balance": get_count_coins(fr['id'])['count']},
+                "to": {"user": to, "balance": get_count_coins(to['id'])['count']}}
+
+
 if __name__ == '__main__':
-    pprint(get_top_users())
+    pprint(transfer_coins("1", "jag_k58", 5))
+    print(*map(lambda x: get_count_coins(x)['count'], [1, "jag_k58"]))

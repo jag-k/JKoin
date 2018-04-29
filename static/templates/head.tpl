@@ -33,7 +33,7 @@
         <a class="nav-link" href="/wallet">Wallet</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="/transfer">Coin Transfer</a>
+        <a class="nav-link" href="/transfer">JKoin Transfer</a>
       </li>
     </ul>
   </div>
