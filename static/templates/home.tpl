@@ -65,8 +65,8 @@ string: durov-vhOSROTXBv
     %end
   </tbody>
 </table>
-<li>OK -- OK</li>
-<li>Error -- String is incorrect</li>
-<li>IDB -- String is correct, but it's in DataBase</li>
+<li>OK — OK</li>
+<li>Error — String is incorrect</li>
+<li>IDB — String is correct, but it's in DataBase</li>
 <br/>
 <br/>
