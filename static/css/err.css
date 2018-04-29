@@ -1,0 +1,8 @@
+.layout {
+    width: 400px;
+	margin: 0 auto;
+    margin: 0;
+    display: table-cell;
+    vertical-align: middle;
+    height: 100%;
+}

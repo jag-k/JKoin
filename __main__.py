@@ -1,4 +1,6 @@
-from bottle import Bottle, run, route, static_file, redirect, template
+from bottle import Bottle, run, route, static_file, redirect, template, request
+import bottle
+from mogo_db import *
 app = Bottle()
 
 
@@ -7,19 +9,28 @@ def st(filename):
     return static_file(filename, root="static/")
 
 
-@app.route('/json/<filename:re:.*\.json>')
-def json_get(filepath):
-    return static_file(filepath, root='json/', mimetype='application/json')
+# @app.error(404)
+# def err(*args, **kwargs):
+#     print(args, kwargs)
+#     return template("main", text="404")
+
+@app.route('/wallet', method=["GET", "POST"])
+def wallet(page="Wallet"):
+    params = request.params  # type: bottle.FormsDict
+    print(params.dict)
+    return template("main", text=page.capitalize(), hashes=params.dict.get("hashes", [[]])[0])
 
 
-@app.route('/')
-def go_home():
-    redirect('/home')
+@app.route('/', method=["GET", "POST"])
+def hello(page='Home'):
 
+    params = request.params  # type: bottle.FormsDict
+    hashes = dict((i, create_coin(i)) for i in filter(lambda x: x,
+                                                      map(lambda x: x.strip(),
+                                                          params.getunicode("hashes", "").strip().split('\n'))))
+    # pprint(hashes)
 
-@app.route('/<text>')
-def hello(text="home"):
-    return template("index", text=text)
+    return template("main", text=page.capitalize(), hashes=hashes, ph=params.getunicode("hashes", "").strip())
 
 
 if __name__ == '__main__':

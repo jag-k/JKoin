@@ -1,0 +1,10 @@
+* {
+    transition: all .356s;
+}
+
+body {
+    font: 1em Arial;
+    background: url(https://subtlepatterns.com/patterns/grid.png) fixed;
+    padding-bottom: 1px;
+    margin: auto;
+}
