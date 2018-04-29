@@ -1,6 +1,7 @@
 <br/>
 <br/>
 
+%if top:
 <h2>TOP {{ count }}:</h2>
 %count = 0
 <table class="table">
@@ -24,3 +25,6 @@
 </table>
 <br/>
 <br/>
+
+%else:
+<h1>No one is here... Come back later)</h1>

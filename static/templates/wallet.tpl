@@ -13,5 +13,5 @@
 
 %if count and count["user"]:
     <p><a href="https://vk.com/id{{count['user']['id']}}">Your</a> store: {{ count['count'] }}</p>
-%elif count:
+%elif count['count'] != -1:
     <p>Your VKID is incorrect. Please try again</p>

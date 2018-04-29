@@ -28,6 +28,7 @@ def transfer(page="Transfer"):
 def wallet(page="Wallet"):
     params = request.params  # type: bottle.FormsDict
     count = get_count_coins(params.getunicode("id", "").strip())
+    count['count'] = -1 if not params.getunicode("id", "") else count['count']
     return template("main", text=page.capitalize(), count=count)
 
 

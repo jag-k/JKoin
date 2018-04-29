@@ -60,10 +60,13 @@ string: durov-vhOSROTXBv
             %else:
                 <td>None</td>
             %end
-          <td>{{"OK" if hashes[i]["status"] else "Error"}}</td>
+          <td>{{("OK" if hashes[i]["status"] else "Error") if type(hashes[i]['status']) == bool else hashes[i]['status']}}</td>
         </tr>
     %end
   </tbody>
 </table>
+<li>OK -- OK</li>
+<li>Error -- String is incorrect</li>
+<li>IDB -- String is correct, but it's in DataBase</li>
 <br/>
 <br/>

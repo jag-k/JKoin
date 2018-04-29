@@ -65,11 +65,11 @@ def create_coin(text: str):
                     {
                         "string": text,
                         "user": get_user(user)['id'],
-                        "datetime": datetime.utcnow(),
                         "time": time.time()
                     }
                 )
-            return {"status": True, "user": get_user(user)}
+                return {"status": True, "user": get_user(user)}
+            return {"status": "IDB", "user": get_user(user)}
     return {"status": False, "user": (get_user(text.split('-')[0]) if len(text.split('-')) == 2 else {})}
 
 
@@ -114,7 +114,6 @@ def transfer_coins(from_user, to_user, count=1):
                     "coin": DBRef("coins", id),
                     "user": fr['id'],
                     "to": to['id'],
-                    "datetime": datetime.utcnow(),
                     "time": time.time()
                 }
             )
