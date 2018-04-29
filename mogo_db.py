@@ -13,6 +13,11 @@ coins = client.jkoin.coins  # type: pymongo.collection.Collection
 log = client.jkoin.log  # type: pymongo.collection.Collection
 
 
+def __clear_db__():
+    coins.delete_many({"user": "$user"})
+    log.delete_many({"user": "$user"})
+
+
 def md5(string, encoding="utf-8"):
     return str(__md__(str(string).encode(encoding)).hexdigest())
 
@@ -58,7 +63,7 @@ def create_coin(text: str):
                 coins.insert_one(
                     {
                         "string": text,
-                        "user": user,
+                        "user": get_user(user)['id'],
                         "datetime": datetime.utcnow(),
                         "time": time.time()
                     }
@@ -67,7 +72,15 @@ def create_coin(text: str):
     return {"status": False, "user": (get_user(text.split('-')[0]) if len(text.split('-')) == 2 else {})}
 
 
+def get_count_coins(user_id):
+    user = get_user(user_id)
+    return {"count": coins.find({"user": user.get('id', -1)}).count(), "user": user}
+
+
 if __name__ == '__main__':
     print(create_coin("id1-OdKmnRPbNr"))
     for i in coins.find():
         pprint(i)
+    print(get_count_coins("id1"))
+    print(get_count_coins("jag_k58"))
+    print(get_count_coins("2131g13g44tc3"))

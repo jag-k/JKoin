@@ -14,14 +14,15 @@ def st(filename):
 #     print(args, kwargs)
 #     return template("main", text="404")
 
-@app.route('/wallet', method=["GET", "POST"])
+@app.route('/wallet')
 def wallet(page="Wallet"):
     params = request.params  # type: bottle.FormsDict
-    print(params.dict)
-    return template("main", text=page.capitalize(), hashes=params.dict.get("hashes", [[]])[0])
+    count = get_count_coins(params.getunicode("id", "").strip())
+    print(count)
+    return template("main", text=page.capitalize(), count=count)
 
 
-@app.route('/', method=["GET", "POST"])
+@app.route('/')
 def hello(page='Home'):
 
     params = request.params  # type: bottle.FormsDict
