@@ -2,7 +2,8 @@
 
 <h2>Rule:</h2>
 <p>The string should look like: <strong>VKID-string</strong> , where <mark>VKID</mark> is the id or domain <a href="https://vk.com/">vk.com</a>, and <mark>string</mark> a string of any length</p>
-<p>MD5-hash must start with 4 characters of the <mark>VKID</mark> MD5-hash</p>
+<p>MD5-hash must start with {{ coef }} characters of the <mark>VKID</mark> MD5-hash</p>
+
 <pre><code>
 string: 1-tUddOyxWhm
     id = 1

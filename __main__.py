@@ -49,7 +49,8 @@ def hello(page='Home'):
                                                           params.getunicode("hashes", "").strip().split('\n'))))
     # pprint(hashes)
 
-    return template("main", text=page.capitalize(), hashes=hashes, ph=params.getunicode("hashes", "").strip())
+    return template("main", text=page.capitalize(), hashes=hashes, ph=params.getunicode("hashes", "").strip(),
+                    coef=COEFF)
 
 
 if __name__ == '__main__':

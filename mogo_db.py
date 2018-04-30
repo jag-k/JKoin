@@ -15,8 +15,8 @@ log = client.jkoin.log  # type: pymongo.collection.Collection
 
 
 def __clear_db__():
-    coins.delete_many({"user": "$user"})
-    log.delete_many({"user": "$user"})
+    log.remove()
+    coins.remove()
 
 
 def md5(string, encoding="utf-8"):
@@ -123,5 +123,4 @@ def transfer_coins(from_user, to_user, count=1):
 
 
 if __name__ == '__main__':
-    pprint(transfer_coins("1", "jag_k58", 5))
-    print(*map(lambda x: get_count_coins(x)['count'], [1, "jag_k58"]))
+    __clear_db__()
