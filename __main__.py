@@ -21,7 +21,8 @@ def transfer(page="Transfer"):
     to_user = params.getunicode("to", "").strip()
     count = params.getunicode("count", "").strip()
     count = count if str(count).isdigit() else 1
-    return template("main", text=page.capitalize(), res=transfer_coins(from_user, to_user, int(count)))
+    res = transfer_coins(from_user, to_user, int(count)) if all((from_user, to_user, int(count))) else {}
+    return template("main", text=page.capitalize(), res=res)
 
 
 @app.route('/wallet')
