@@ -101,10 +101,12 @@ def transfer_coins(from_user, to_user, count=1):
     err = False
     fr, to = get_user(from_user), get_user(to_user)
     transfer_count = 0
-    if fr == to:
+    if not fr or not to:
+        err = "IDs is incorrect! Please, try again."
+    elif fr == to:
         err = "You can't transfer JKoin to yourself!"
 
-    elif 0 >= get_count_coins(fr['id'])['count'] < count:
+    elif get_count_coins(fr['id'])['count'] < count:
         err = "Insufficient JKoin to complete the transfer"
 
     elif fr and to:
@@ -129,8 +131,8 @@ def transfer_coins(from_user, to_user, count=1):
 
     return {"transfer": transfer_count,
             "err": err,
-            "from": {"user": fr, "balance": get_count_coins(fr['id'])['count']},
-            "to": {"user": to, "balance": get_count_coins(to['id'])['count']}}
+            "from": {"user": fr, "balance": get_count_coins(fr.get('id', {"count": -1}))['count']},
+            "to": {"user": to, "balance": get_count_coins(to.get('id', {"count": -1}))['count']}}
 
 
 if __name__ == '__main__':
