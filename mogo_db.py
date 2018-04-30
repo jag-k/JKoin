@@ -103,8 +103,10 @@ def transfer_coins(from_user, to_user, count=1):
     transfer_count = 0
     if fr == to:
         err = "You can't transfer JKoin to yourself!"
-    elif get_count_coins(fr['id'])['count']:
+
+    elif 0 >= get_count_coins(fr['id'])['count'] < coins:
         err = "Insufficient JKoin to complete the transfer"
+
     elif fr and to:
         coins_count = get_count_coins(fr['id'])['count']
         while coins_count and count:
