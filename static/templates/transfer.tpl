@@ -13,15 +13,16 @@
     </div>
 </form>
 
-%if res and res['from'] and res['to']:
+%if res and not res['err'] and res['from'] and res['to']:
 <br/>
 <br/>
 
 <p>From <a href="https://vk.com/id{{res['from']['user']['id']}}">{{res['from']['user']["first_name"] + " " + res['from']['user']["last_name"]}}</a> (<strong><abbr title="Balance">{{ res['from']['balance'] }}</abbr></strong>) to <a href="https://vk.com/id{{res['to']['user']['id']}}">{{res['to']['user']["first_name"] + " " + res['to']['user']["last_name"]}}</a> (<strong><abbr title="Balance">{{ res['to']['balance'] }}</abbr></strong>) {{res['transfer']}} <a href="/">JKoins</a> were transferred</p>
 
-%elif res:
+
+%elif res and res['err']:
 <br/>
 <br/>
 
-<p>IDs is incorrect! Please, try again.</p>
+<p class="text-danger">{{ res['err'] }}</p>
 %end

@@ -98,9 +98,14 @@ def get_top_users(count=10):
 
 
 def transfer_coins(from_user, to_user, count=1):
+    err = False
     fr, to = get_user(from_user), get_user(to_user)
-    if fr and to:
-        transfer_count = 0
+    transfer_count = 0
+    if fr == to:
+        err = "You can't transfer JKoin to yourself!"
+    elif get_count_coins(fr['id'])['count']:
+        err = "Insufficient JKoin to complete the transfer"
+    elif fr and to:
         coins_count = get_count_coins(fr['id'])['count']
         while coins_count and count:
             count -= 1
@@ -117,9 +122,13 @@ def transfer_coins(from_user, to_user, count=1):
                     "time": time.time()
                 }
             )
-        return {"transfer": transfer_count,
-                "from": {"user": fr, "balance": get_count_coins(fr['id'])['count']},
-                "to": {"user": to, "balance": get_count_coins(to['id'])['count']}}
+    else:
+        err = "IDs is incorrect! Please, try again."
+
+    return {"transfer": transfer_count,
+            "err": err,
+            "from": {"user": fr, "balance": get_count_coins(fr['id'])['count']},
+            "to": {"user": to, "balance": get_count_coins(to['id'])['count']}}
 
 
 if __name__ == '__main__':
